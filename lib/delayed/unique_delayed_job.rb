@@ -120,7 +120,6 @@ module Delayed
       cols_to_insert.merge! :priority => priority if priority
       cols_to_insert.merge! :run_at => run_at if run_at
       cols_to_insert.merge! :handler => handler
-      cols_to_insert.merge! :queue => queue if queue
 
       job = nil
 
