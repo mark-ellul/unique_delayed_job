@@ -115,11 +115,11 @@ module Delayed
         Delayed::Job.update_all(null_setting_strings.join("\n              ,"),
                                 "locked_by IS NOT NULL")
       end
-
+      debugger
       cols_to_insert = columns
       cols_to_insert.merge! :priority => priority if priority
       cols_to_insert.merge! :run_at => run_at if run_at
-      cols_to_insert.merge! :handler => handler
+      cols_to_insert.merge! :payload_object => handler
 
       job = nil
 
@@ -129,7 +129,13 @@ module Delayed
       # ignoring case cause case differs between the two cases
       # if doesn't look like a dupe key error, then reraise the exception
       begin
-        job = Delayed::Job.create(cols_to_insert)
+        job = Delayed::Job.new(cols_to_insert)
+        attrs_to_ignore = [:queue, :payload_object, :priority, :run_at]
+        cols_to_update = columns.keys - attrs_to_ignore
+        cols_to_update.each do |k|
+          job.send("#{k.to_s}=", columns[k])
+        end
+        job.save
       rescue => e
         if /(duplicate).*(key)/i !~ e.message
           raise e
