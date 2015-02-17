@@ -112,10 +112,10 @@ module Delayed
           null_setting_strings << "#{c.to_s} = NULL"
         end
 
-        Delayed::Job.update_all(null_setting_strings.join("\n              ,"),
-                                "locked_by IS NOT NULL")
+        #Delayed::Job.update_all(null_setting_strings.join("\n              ,"),
+        #                        "locked_by IS NOT NULL")
       end
-      debugger
+      #debugger
       cols_to_insert = columns
       cols_to_insert.merge! :priority => priority if priority
       cols_to_insert.merge! :run_at => run_at if run_at
