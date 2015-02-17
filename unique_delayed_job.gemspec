@@ -2,7 +2,7 @@
 $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.name        = "unique_delayed_job"
-  s.version     = "0.1.2"
+  s.version     = "0.1.3"
   s.authors     = ["Brian Percival", "Mark Ellul"]
   s.email       = ["", "mark.ellul@gmail.com"]
   s.homepage    = "http://github.com/mark-ellul/unique_delayed_job"
